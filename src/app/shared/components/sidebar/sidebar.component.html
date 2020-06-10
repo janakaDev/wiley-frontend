@@ -1,0 +1,43 @@
+<mat-nav-list>
+  <div *ngIf="(isLoggedIn | async)">
+    <div class="profile-card">
+      <div class="header">
+        <h2>{{userName | async}}</h2>
+        <h4>{{email | async}}</h4>
+      </div>
+      <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Soufiane FADIL">
+    </div>
+    <mat-divider></mat-divider>
+
+    <h2 matSubheader>My Links</h2>
+
+    <a mat-list-item [routerLink]="['/dashboard/my-bookings']">Manage My Bookings</a>
+  </div>
+   <div *ngIf="!(isLoggedIn | async)">
+    <div class="profile-card">
+      <div class="header">
+        <h2>Please Log In to access your Dashboard</h2>
+        <button mat-button [routerLink]="['/dashboard/login']">
+          <mat-icon>exit_to_app</mat-icon>
+          Log IN
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Tools</h2>
+
+  <a mat-list-item>
+    <mat-icon>import_contacts</mat-icon>
+    Contacts US
+  </a>
+
+  <a mat-list-item>
+    <mat-icon>contact_phone</mat-icon>
+    Call Us
+  </a>
+
+</mat-nav-list>

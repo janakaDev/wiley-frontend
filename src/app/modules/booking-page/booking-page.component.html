@@ -1,0 +1,83 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Book Hotel</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form (ngSubmit)="submitForCheck()" [formGroup]="bookingForm" class="example-form">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input formControlName="min_occupancy" matInput placeholder="Number of guests" type="number" [min]="1">
+        </mat-form-field>
+        <mat-form-field class="width-medium">
+          <input
+            [matDatepicker]="startDate"
+            [min]="minStartDate"
+            formControlName="start_date"
+            matInput
+            placeholder="Start Date"
+          />
+
+          <mat-datepicker-toggle [for]="startDate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+          <mat-error *ngFor="let validation of validationMessages.startDate">
+            <mat-error *ngIf="hasError('start_date', validation.type)"
+                       class="error-message">{{ validation.message }}</mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="width-medium">
+          <input
+            [matDatepicker]="endDate"
+            [min]="minStartDate"
+            formControlName="end_date"
+            matInput
+            placeholder="End Date"
+          />
+
+          <mat-datepicker-toggle [for]="endDate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+          <mat-error *ngFor="let validation of validationMessages.startDate">
+            <mat-error *ngIf="hasError('end_date', validation.type)"
+                       class="error-message">{{ validation.message }}</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <button [disabled]="bookingForm.invalid" class="btn-block" color="accent" mat-stroked-button>Check Availability
+      </button>
+    </form>
+  </mat-card-content>
+
+</mat-card>
+
+
+<div *ngIf="isAvailable">
+  <mat-card flex-gt-sm style="width: 90% !important;" *ngFor="let roomType of roomAvailabilities">
+    <mat-card-title>{{roomType.name}}</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListAvatar>description</mat-icon>
+        <h4 matLine>{{roomType.description}}</h4>
+        <p matLine>Some Info</p>
+      </mat-list-item>
+      <mat-divider matInset></mat-divider>
+      <h3 matSubheader>Dates</h3>
+      <mat-list-item>
+        <mat-icon matListAvatar>today</mat-icon>
+        <h4 matLine>{{startDate1 | date}}</h4>
+        <p matLine>Checkin Date</p>
+      </mat-list-item>
+      <mat-divider matInset></mat-divider>
+      <mat-list-item>
+        <mat-icon matListAvatar>today</mat-icon>
+        <h4 matLine>{{endDate2 | date}}</h4>
+        <p matLine>Checkout Date</p>
+      </mat-list-item>
+    </mat-list>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <button class="text-upper" color="accent" (click)="bookRoom(roomType.id, roomType.basePrice)" mat-button>Book This Now for ${{roomType.basePrice}}</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+@import 'bulma/sass/utilities/_all.sass';
+@import 'bulma/sass/grid/columns.sass';
+@import './sass/_variables';
+@include mat-core();
+$padua-app-primary: mat-palette($mat-padua-orange, P100, P100, P100);
+$padua-app-accent: mat-palette($mat-padua-blue, Q100, Q100, Q100);
+
+.primary-color {
+  color: mat-color($padua-app-primary) !important;
+}
+
+.primary-color-blue {
+  color: #337ab7 !important;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.mat-toolbar span a {
+  text-decoration: none;
+  color: white;
+}
+
+.muted {
+  color: #b7b7b7;
+  font-size: 14px;
+}
+
+// The warn palette is optional (defaults to red).
+$padua-app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$padua-app-theme: mat-light-theme(
+  $padua-app-primary,
+  $padua-app-accent,
+  $padua-app-warn
+);
+@include angular-material-theme($padua-app-theme);
+

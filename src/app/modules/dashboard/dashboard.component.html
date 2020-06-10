@@ -1,0 +1,57 @@
+<mat-toolbar>
+  <form [formGroup]="angForm" class="example-form">
+    <mat-form-field floatLabel='never' style="width: 100%">
+      <input
+        autocomplete="off"
+        formControlName="searchText"
+        matInput
+        placeholder="Search"
+        (keyup)="submitClick($event)"
+      >
+    </mat-form-field>
+  </form>
+</mat-toolbar>
+<div *ngFor="let hotel of hotelData | filter : searchText" fxLayout="row" fxLayoutAlign="space-between">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{hotel.name}}</mat-card-title>
+      <mat-card-subtitle>{{hotel.location}}</mat-card-subtitle>
+      <div *ngFor='let star of arrayOne(hotel.stars)'>
+        <span class="material-icons">stars</span>
+      </div>
+
+    </mat-card-header>
+
+    <mat-card-content>
+      <div fxLayout="row">
+        <div fxFlex="70%" fxLayout="column" style="padding-right: 15px">
+          <p>
+            {{hotel.description}}
+          </p>
+          <div fxLayout="row">
+            <div *ngIf="hotel.spa" fxFlex="30%" fxLayout="column">
+              <mat-chip  color="primary" selected>Spa (In Hotel)</mat-chip>
+            </div>
+            <div *ngIf="hotel.taxi" fxFlex="30%" fxLayout="column">
+              <mat-chip  color="accent" selected>Taxi Available</mat-chip>
+            </div>
+            <div *ngIf="hotel.pool" fxFlex="30%" fxLayout="column">
+              <mat-chip  color="warn" selected>Pool</mat-chip>
+            </div>
+          </div>
+          <mat-card-actions>
+            <button mat-button [routerLink]="['book', hotel.id]" color="accent">Check Availability</button>
+          </mat-card-actions>
+        </div>
+        <div fxFlex="30%" fxLayout="column">
+          <img alt="Photo of a Shiba Inu"
+               src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="max-width: 255px; max-height: 141px;">
+        </div>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+
+
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button (click)="toggleSideBar()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span [routerLink]="['/dashboard']"> Wiley Test </span>
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end" *ngIf="(isLoggedIn | async)">
+      <button mat-button (click)="logout2()">
+        <mat-icon>exit_to_app</mat-icon>
+        Sign out
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

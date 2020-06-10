@@ -1,0 +1,81 @@
+<h2>My Bookings</h2>
+<table [dataSource]="dataSource" class="mat-elevation-z8" mat-table style="width: 90% !important;">
+  <ng-container matColumnDef="hotel">
+    <th *matHeaderCellDef mat-header-cell> hotel</th>
+    <td *matCellDef="let element" mat-cell> {{element.hotel.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="check-in">
+    <th *matHeaderCellDef mat-header-cell>check-in</th>
+    <td *matCellDef="let element" mat-cell> {{element.booking.checkin}} </td>
+  </ng-container>
+  <ng-container matColumnDef="check-out">
+    <th *matHeaderCellDef mat-header-cell>check-out</th>
+    <td *matCellDef="let element" mat-cell> {{element.booking.checkout}} </td>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <th *matHeaderCellDef mat-header-cell>price</th>
+    <td *matCellDef="let element" mat-cell> {{element.booking.total_price}} </td>
+  </ng-container>
+  <ng-container matColumnDef="guests">
+    <th *matHeaderCellDef mat-header-cell>Guests</th>
+    <td *matCellDef="let element" mat-cell> {{element.booking.occupancy}} </td>
+  </ng-container>
+  <ng-container matColumnDef="status">
+    <th *matHeaderCellDef mat-header-cell>Booking Status</th>
+    <td *matCellDef="let element" mat-cell> {{element.booking.status}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th *matHeaderCellDef mat-header-cell></th>
+    <td *matCellDef="let row" mat-cell>
+      <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" mat-icon-button>
+        <!-- <mat-icon>more_vert</mat-icon> -->
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="checkIn(
+        row.booking.id,
+        row.booking.checkin,
+        row.booking.checkout,
+        row.booking.status,
+        row.hotel.id
+        )" mat-menu-item *ngIf="row.booking.status == 'booked'">
+          <mat-icon class="warn">desktop_mac</mat-icon>
+          <span>Check-IN</span>
+        </button>
+        <button (click)="checkOut(
+        row.booking.id,
+        row.booking.checkin,
+        row.booking.checkout,
+        row.booking.status,
+        row.hotel.id,
+        row.reservationNights
+        )" mat-menu-item *ngIf="row.booking.status == 'checked_in'">
+          <mat-icon class="warn">clear</mat-icon>
+          <span>Check-Out</span>
+        </button>
+        <button (click)="orderSpa(row.booking.id)" *ngIf="row.booking.status !== 'checked_out' && row.hotel.spa == 1" mat-menu-item>
+          <mat-icon [style.color]="'green'" class="warn">accessibility_new</mat-icon>
+          <span [style.color]="'green'">Order Spa</span>
+        </button>
+        <button (click)="orderFood(row.booking.id)" mat-menu-item *ngIf="row.booking.status !== 'checked_out'">
+          <mat-icon [style.color]="'green'" class="warn">emoji_food_beverage</mat-icon>
+          <span [style.color]="'green'">Order Food</span>
+        </button>
+        <button (click)="orderPool(row.booking.id)" *ngIf="row.booking.status !== 'checked_out' && row.hotel.pool == 1" mat-menu-item>
+          <mat-icon [style.color]="'green'" class="warn">pool</mat-icon>
+          <span [style.color]="'green'">Order Pool</span>
+        </button>
+        <button (click)="orderTaxi(row.booking.id)" *ngIf="row.booking.status !== 'checked_out' && row.hotel.taxi == 1" mat-menu-item>
+          <mat-icon [style.color]="'green'" class="warn">local_taxi</mat-icon>
+          <span [style.color]="'green'">Order Taxi</span>
+        </button>
+        <button (click)="deleteBooking(row.booking.id)" mat-menu-item>
+          <mat-icon [style.color]="'red'" class="warn">delete</mat-icon>
+          <span [style.color]="'red'">Cancel Booking</span>
+        </button>
+      </mat-menu>
+    </td>
+  </ng-container>
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>

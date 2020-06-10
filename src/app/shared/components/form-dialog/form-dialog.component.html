@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>More Details Please</h2>
+
+<mat-dialog-content>
+
+  <p> {{data.message}} </p>
+
+  <form [formGroup]="optionsForm" class="example-form">
+    <mat-card-content>
+      <mat-form-field class="example-full-width">
+        <textarea formControlName="description" matInput placeholder="Description" type="text"></textarea>
+      </mat-form-field>
+      <mat-form-field class="width-medium">
+        <input
+          [matDatepicker]="startDate"
+          [min]="minStartDate"
+          formControlName="start_date"
+          matInput
+          placeholder="Date"
+        />
+
+        <mat-datepicker-toggle [for]="startDate" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+    </mat-card-content>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button (click)="submitForCheck()" [disabled]="optionsForm.invalid" class="btn-block" color="accent" mat-stroked-button>Order Now
+  </button>
+  <button class="mat-raised-button" (click)="onNoClick(false)">Close</button>
+</mat-dialog-actions>
